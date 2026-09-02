@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Atlasia — Knowledge Platform</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--soft:#eef1f7;--text:#18202b;--muted:#687386;--line:#dfe4ec;--p:#5b5ce2;--p2:#4546c6;--danger:#d64c62;--shadow:0 10px 30px #1c25400d}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text)}
+button,input,textarea{font:inherit}button{cursor:pointer;border:0}.top{height:68px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:16px;padding:0 22px;position:sticky;top:0;z-index:10}
+.logo{font-weight:900;font-size:22px;color:var(--p);cursor:pointer}.logo span{color:var(--text)}.search{flex:1;max-width:650px;position:relative}.search:before{content:"⌕";position:absolute;left:14px;top:7px;font-size:25px;color:var(--muted)}.search input{width:100%;padding:11px 14px 11px 42px;border:1px solid var(--line);border-radius:12px;background:var(--soft);outline:0}.search input:focus{background:#fff;border-color:var(--p)}
+.actions{margin-left:auto;display:flex;gap:8px;align-items:center}.btn{padding:10px 14px;border-radius:10px;background:var(--soft);font-weight:750;color:var(--text)}.btn.primary{background:var(--p);color:#fff}.btn.primary:hover{background:var(--p2)}.btn.danger{color:var(--danger)}
+.user{display:flex;align-items:center;gap:8px;padding:4px 7px 4px 4px;border:1px solid var(--line);border-radius:12px;background:#fff}.user img{width:30px;height:30px;border-radius:50%}.user span{font-size:13px;font-weight:750;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.layout{display:flex;max-width:1450px;margin:auto}.side{width:235px;min-height:calc(100vh - 68px);padding:24px 14px;border-right:1px solid var(--line);background:#ffffff80}.navtitle{font-size:11px;text-transform:uppercase;color:var(--muted);font-weight:850;margin:16px 10px 7px}.nav{padding:10px;border-radius:9px;color:#465163;font-weight:650;cursor:pointer}.nav:hover,.nav.active{background:#e9eaff;color:var(--p)}.main{flex:1;padding:32px;min-width:0}
+.hero{background:linear-gradient(135deg,#262b63,#5b5ce2);color:white;border-radius:22px;padding:42px;box-shadow:var(--shadow)}.hero h1{font-size:42px;line-height:1.05;margin:0 0 14px;letter-spacing:-1.5px}.hero p{max-width:720px;line-height:1.65;color:#e6e7ff;margin:0 0 22px}.hero .btn{background:white;color:#363795}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}.stat,.card,.box{background:var(--card);border:1px solid var(--line);border-radius:16px}.stat{padding:18px}.stat b{font-size:24px}.stat small{display:block;color:var(--muted);margin-top:4px}.section{margin-top:30px}.sectionhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.section h2{margin:0}.muted{color:var(--muted)}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.card{padding:20px;cursor:pointer;transition:.15s}.card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}.icon{width:38px;height:38px;border-radius:10px;background:#f0f1ff;display:grid;place-items:center}.card h3{margin:11px 0 7px}.card p{color:var(--muted);font-size:14px;line-height:1.5;margin:0}.tag{display:inline-block;background:#eef0ff;color:#5152bd;padding:5px 8px;border-radius:7px;font-size:11px;font-weight:800;margin:9px 4px 0 0}.meta{font-size:12px;color:var(--muted);margin-top:13px}
+.article{max-width:930px;margin:auto}.crumb{color:var(--p);font-size:13px;font-weight:800;cursor:pointer;margin-bottom:12px}.article h1{font-size:42px;margin:0 0 7px}.lead{font-size:18px;line-height:1.6;color:var(--muted)}.articlegrid{display:grid;grid-template-columns:minmax(0,1fr) 245px;gap:30px;margin-top:24px}.content{font-size:16px;line-height:1.75}.content h2{font-size:25px;margin-top:30px}.content blockquote{margin:20px 0;padding:14px 18px;border-left:4px solid var(--p);background:#f0f1ff;border-radius:0 10px 10px 0}.info{height:max-content;padding:17px;position:sticky;top:90px}.info h3{margin-top:0}.row{display:flex;justify-content:space-between;gap:10px;border-top:1px solid var(--line);padding:10px 0;font-size:13px}.row b{color:var(--muted)}
+.editor{max-width:1000px;margin:auto}.editor h1{margin-bottom:5px}.title{width:100%;font-size:35px;font-weight:850;border:0;background:transparent;outline:0;padding:10px 0 18px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0}.field{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;background:white;outline:0}.toolbar{display:flex;gap:5px;flex-wrap:wrap;background:white;border:1px solid var(--line);border-bottom:0;border-radius:12px 12px 0 0;padding:8px}.tool{background:var(--soft);padding:7px 10px;border-radius:7px;font-weight:800}.editor textarea{width:100%;height:430px;padding:20px;border:1px solid var(--line);border-radius:0 0 12px 12px;resize:vertical;outline:0;line-height:1.6}.editorbar{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+.explore{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.cat{background:white;border:1px solid var(--line);padding:20px;border-radius:14px;cursor:pointer}.cat b{display:block;margin-top:12px}.cat small{color:var(--muted)}
+.profile{display:grid;grid-template-columns:240px 1fr;gap:20px}.box{padding:22px}.avatar{width:78px;height:78px;border-radius:50%;object-fit:cover;background:#e9eaff}.listrow{padding:15px 0;border-bottom:1px solid var(--line);cursor:pointer}.listrow:last-child{border:0}.listrow h3{margin:0 0 5px}.listrow p{margin:0;color:var(--muted);font-size:13px}.empty{text-align:center;padding:55px;background:white;border:1px dashed var(--line);border-radius:15px}.status{position:fixed;right:18px;bottom:18px;background:#1d2532;color:white;padding:12px 16px;border-radius:10px;z-index:99;box-shadow:var(--shadow)}
+@media(max-width:900px){.side{display:none}.main{padding:20px}.cards{grid-template-columns:1fr 1fr}.explore{grid-template-columns:1fr 1fr}.articlegrid{grid-template-columns:1fr}.info{position:static}.profile{grid-template-columns:1fr}}
+@media(max-width:600px){.top{padding:0 10px;gap:9px}.logo{font-size:19px}.search{max-width:none}.actions .btn{display:none}.user span{display:none}.main{padding:14px}.hero{padding:25px}.hero h1{font-size:31px}.stats,.cards,.explore,.fields{grid-template-columns:1fr}.article h1{font-size:32px}.editor textarea{height:350px}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="logo" onclick="home()">Atlas<span>ia</span></div>
+  <div class="search"><input id="search" placeholder="Cari artikel, dunia, topik..." onkeydown="if(event.key==='Enter')searchArticles()"></div>
+  <div class="actions">
+    <button class="btn" onclick="explore()">Jelajah</button>
+    <button class="btn primary" onclick="requireLogin()">＋ Buat</button>
+    <div id="account"></div>
+  </div>
+</header>
+<div class="layout">
+<aside class="side">
+  <div class="navtitle">Navigasi</div>
+  <div class="nav active" id="nav-home" onclick="home()">⌂ Beranda</div>
+  <div class="nav" id="nav-explore" onclick="explore()">◈ Jelajah</div>
+  <div class="nav" id="nav-saved" onclick="saved()">☆ Tersimpan</div>
+  <div class="navtitle">Akun</div>
+  <div class="nav" onclick="profile()">● Profil saya</div>
+  <div class="nav" onclick="requireLogin()">＋ Buat artikel</div>
+  <div class="navtitle">Prototype</div>
+  <div class="nav" onclick="about()">? Status backend</div>
+</aside>
+<main class="main" id="main"></main>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-analytics.js";
+import {
+  getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+import {
+  getFirestore, collection, addDoc, doc, getDoc, setDoc, updateDoc, deleteDoc,
+  onSnapshot, query, limit, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+const firebaseConfig={
+  apiKey:"AIzaSyDX-qfSxXMSHr5m3Kfp1qHyHgwiF1xB-Lo",
+  authDomain:"first-prototype-wiki.firebaseapp.com",
+  projectId:"first-prototype-wiki",
+  storageBucket:"first-prototype-wiki.firebasestorage.app",
+  messagingSenderId:"506146325520",
+  appId:"1:506146325520:web:8266348a56eb9b3cae3695",
+  measurementId:"G-E1XZ1F6X42"
+};
+
+const app=initializeApp(firebaseConfig);
+try{getAnalytics(app)}catch(e){console.warn("Analytics:",e)}
+const auth=getAuth(app), db=getFirestore(app);
+const provider=new GoogleAuthProvider();
+provider.setCustomParameters({prompt:"select_account"});
+
+let user=null, articles=[], unsub=null, editingId=null;
+const demo=[
+ {id:"demo-1",title:"Evolusi Batu Jalanan",category:"Sains & Alam",tags:["batu","evolusi","geologi"],desc:"Dokumentasi hipotetis tentang perubahan sebuah batu yang terus berada di pinggir jalan selama ratusan tahun.",author:"Nara",views:1842,content:"<p>Batu jalanan tampak sederhana, tetapi paparan lingkungan dalam waktu panjang menghasilkan perubahan fisik yang menarik.</p><blockquote>Artikel ini adalah dokumentasi hipotetis, bukan klaim bahwa batu berevolusi secara biologis.</blockquote><h2>Asal-usul</h2><p>Batu ini ditemukan di tepi jalan pada tahun 1824.</p><h2>Perubahan</h2><p>Hujan, gesekan, perubahan suhu, lumut, dan aktivitas manusia perlahan mengubah permukaannya.</p>"},
+ {id:"demo-2",title:"The Asteria Project",category:"Fiksi & Dunia",tags:["worldbuilding","fiksi"],desc:"Kumpulan dokumentasi dunia Asteria: sejarah, negara, teknologi, dan sistem energinya.",author:"Rin",views:3250,content:"<p>Asteria adalah dunia fiksi dengan sejarah selama lebih dari 4.000 tahun.</p><h2>Energi</h2><p>Masyarakat Asteria menggunakan sistem energi bernama Arca.</p>"},
+ {id:"demo-3",title:"Cara Kerja Mesin Uap Mini",category:"Teknologi",tags:["mesin","engineering"],desc:"Penjelasan sederhana mengenai prinsip kerja mesin uap berukuran kecil.",author:"Dimas",views:912,content:"<p>Mesin uap mengubah energi panas menjadi kerja mekanis melalui ekspansi fluida kerja.</p><h2>Siklus dasar</h2><p>Air dipanaskan hingga menghasilkan uap, lalu tekanannya digunakan untuk mendorong piston atau turbin.</p>"}
+];
+
+function esc(s=""){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+function ts(a){return a?.updatedAt?.toDate?.()?.toLocaleDateString("id-ID")||"baru saja"}
+function setNav(page){document.querySelectorAll(".nav").forEach(x=>x.classList.remove("active"));let n=document.getElementById("nav-"+page);if(n)n.classList.add("active")}
+function toast(s){const x=document.createElement("div");x.className="status";x.textContent=s;document.body.appendChild(x);setTimeout(()=>x.remove(),2200)}
+function card(a){return `<article class="card" onclick='window.openArticle(${JSON.stringify(a.id)})'><div class="icon">${a.category?.includes("Fiksi")?"✦":a.category?.includes("Sains")?"◉":a.category?.includes("Tekno")?"⚙":"▤"}</div><h3>${esc(a.title)}</h3><p>${esc(a.desc||"Belum ada deskripsi.")}</p><div>${(a.tags||[]).map(t=>`<span class="tag">#${esc(t)}</span>`).join("")}</div><div class="meta">${esc(a.authorName||a.author||"Kontributor")} · ${Number(a.views||0).toLocaleString()} dilihat · ${ts(a)}</div></article>`}
+
+function home(){
+ setNav("home");
+ const all=[...articles,...demo], popular=[...all].sort((a,b)=>(b.views||0)-(a.views||0)).slice(0,3);
+ document.getElementById("main").innerHTML=`<section class="hero"><h1>Pengetahuan tentang apa pun.</h1><p>Atlasia adalah tempat untuk membuat dokumentasi tentang apa saja: worldbuilding, karakter, teknologi, sejarah, proyek pribadi, teori, sampai evolusi batu di pinggir jalan. Tidak semua ide harus masuk ensiklopedia tradisional.</p><button class="btn" onclick="window.requireLogin()">＋ Buat artikel</button></section>
+ <div class="stats"><div class="stat"><b>${articles.length}</b><small>Artikel online kamu</small></div><div class="stat"><b>Google</b><small>Login akun</small></div><div class="stat"><b>Firestore</b><small>Database online</small></div></div>
+ <section class="section"><div class="sectionhead"><h2>Populer</h2><span class="muted">Demo + artikel online</span></div><div class="cards">${popular.map(card).join("")}</div></section>
+ <section class="section"><div class="sectionhead"><h2>Artikel terbaru</h2></div><div class="cards">${all.slice(-6).reverse().map(card).join("")}</div></section>`;
+}
+function explore(){
+ setNav("explore");
+ const cats=[["✦","Fiksi & Dunia","Worldbuilding dan universe"],["◉","Sains & Alam","Fenomena dan observasi"],["⚙","Teknologi","Mesin dan engineering"],["▤","Panduan","Tutorial dan dokumentasi"],["♜","Sejarah","Timeline dan peristiwa"],["☄","Eksperimen","Konsep dan eksperimen"],["◈","Proyek","Proyek pribadi"],["…","Lainnya","Topik lain"]];
+ document.getElementById("main").innerHTML=`<h1>Jelajah</h1><p class="muted">Topiknya bebas. Aturan utamanya cuma jangan merusak pengalaman orang lain.</p><section class="section"><div class="explore">${cats.map(c=>`<div class="cat" onclick='window.filterCat(${JSON.stringify(c[1])})'><div class="icon">${c[0]}</div><b>${c[1]}</b><small>${c[2]}</small></div>`).join("")}</div></section><section class="section"><div class="sectionhead"><h2>Semua artikel online</h2><span class="muted">${articles.length}</span></div><div class="cards">${articles.length?articles.map(card).join(""):`<div class="empty">Belum ada artikel online.</div>`}</div></section>`;
+}
+window.filterCat=(cat)=>{
+ const f=articles.filter(a=>a.category===cat);
+ document.getElementById("main").innerHTML=`<div class="crumb" onclick="window.explore()">← Jelajah</div><h1>${esc(cat)}</h1><p class="muted">${f.length} artikel</p><section class="section"><div class="cards">${f.length?f.map(card).join(""):`<div class="empty">Belum ada artikel dalam kategori ini.</div>`}</div></section>`;
+};
+function openArticle(id){
+ let a=articles.find(x=>x.id===id)||demo.find(x=>x.id===id);if(!a)return;
+ document.getElementById("main").innerHTML=`<div class="article"><div class="crumb" onclick="window.home()">← Beranda</div><h1>${esc(a.title)}</h1><p class="lead">${esc(a.desc||"")}</p><div class="meta">${esc(a.authorName||a.author||"Kontributor")} · ${ts(a)}</div><div style="margin-top:13px">${a.ownerId===user?.uid?`<button class="btn" onclick='window.editArticle(${JSON.stringify(a.id)})'>✎ Edit</button> <button class="btn danger" onclick='window.removeArticle(${JSON.stringify(a.id)})'>Hapus</button>`:""}</div><div class="articlegrid"><div class="content">${a.content||"<p>Belum ada isi artikel.</p>"}<h2>Tag</h2>${(a.tags||[]).map(t=>`<span class="tag">#${esc(t)}</span>`).join("")}</div><aside class="box info"><h3>Informasi</h3><div class="row"><b>Kategori</b><span>${esc(a.category||"Lainnya")}</span></div><div class="row"><b>Penulis</b><span>${esc(a.authorName||a.author||"")}</span></div><div class="row"><b>Versi</b><span>${a.version||1}</span></div><div class="row"><b>Status</b><span>${a.id.startsWith("demo-")?"Demo":"Firestore"}</span></div></aside></div></div>`;
+}
+window.openArticle=openArticle;
+function requireLogin(){if(user)renderEditor();else login()}
+async function login(){
+  if(location.protocol === "file:"){
+    toast("Buka website lewat hosting/localhost. Firebase Auth tidak aman diuji dari file://");
+    return;
+  }
+  try{
+    const mobile=/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+    if(mobile) await signInWithRedirect(auth,provider);
+    else await signInWithPopup(auth,provider);
+  }catch(e){
+    console.error(e);
+    toast(authError(e));
+  }
+}
+function authError(e){
+  const map={
+    "auth/unauthorized-domain":"Domain website belum ditambahkan ke Firebase Authentication → Settings → Authorized domains.",
+    "auth/popup-blocked":"Popup Google diblokir browser. Izinkan popup atau buka situs dari browser biasa.",
+    "auth/popup-closed-by-user":"Login dibatalkan.",
+    "auth/cancelled-popup-request":"Permintaan login sebelumnya masih berjalan.",
+    "auth/operation-not-supported-in-this-environment":"Metode login ini tidak didukung pada lingkungan saat ini. Gunakan hosting HTTP/HTTPS.",
+    "auth/network-request-failed":"Koneksi ke Firebase gagal. Periksa internet atau konfigurasi domain."
+  };
+  return "Login Google gagal: "+(map[e.code]||e.code||e.message);
+}
+getRedirectResult(auth).catch(e=>{ if(e?.code) toast(authError(e)); });
+async function logout(){try{await signOut(auth);toast("Berhasil logout")}catch(e){toast("Logout gagal")}}
+async function ensureUserProfile(u){
+ await setDoc(doc(db,"users",u.uid),{displayName:u.displayName||"Pengguna",photoURL:u.photoURL||"",email:u.email||"",updatedAt:serverTimestamp()},{merge:true});
+}
+onAuthStateChanged(auth,async u=>{
+ user=u;
+ const el=document.getElementById("account");
+ el.innerHTML=u?`<div class="user"><img src="${esc(u.photoURL||"")}" onerror="this.style.display='none'"><span>${esc(u.displayName||u.email)}</span><button class="btn" onclick="window.logout()">Keluar</button></div>`:`<button class="btn primary" onclick="window.login()">Masuk dengan Google</button>`;
+ if(u){try{await ensureUserProfile(u)}catch(e){console.warn("Profile:",e)}}
+ subscribeArticles();
+});
+function subscribeArticles(){
+ if(unsub)unsub();
+ const q=query(collection(db,"articles"),limit(100));
+ unsub=onSnapshot(q,snap=>{
+   articles=snap.docs.map(d=>({id:d.id,...d.data()}));
+   articles.sort((a,b)=>{
+     const ta=a.updatedAt?.toMillis?.()||0, tb=b.updatedAt?.toMillis?.()||0;
+     return tb-ta;
+   });
+   home();
+ },err=>{
+   console.error(err);
+   articles=[]; home();
+   if(err.code==="permission-denied")toast("Firestore menolak akses. Periksa Firestore Rules.");
+   else toast("Gagal membaca Firestore: "+(err.code||err.message));
+ });
+}
+function markdown(s){return s.split(/\n\s*\n/).map(x=>{x=x.trim();if(!x)return "";if(x.startsWith("## "))return "<h2>"+esc(x.slice(3))+"</h2>";if(x.startsWith("# "))return "<h2>"+esc(x.slice(2))+"</h2>";if(x.startsWith("> "))return "<blockquote>"+esc(x.slice(2))+"</blockquote>";return "<p>"+esc(x).replace(/\*\*(.*?)\*\*/g,"<b>$1</b>").replace(/\*(.*?)\*/g,"<i>$1</i>")+"</p>"}).join("")}
+function plain(html){return html.replace(/<h2>(.*?)<\/h2>/gi,"## $1\n\n").replace(/<blockquote>(.*?)<\/blockquote>/gi,"> $1\n\n").replace(/<p>(.*?)<\/p>/gi,"$1\n\n").replace(/<[^>]+>/g,"").trim()}
+function renderEditor(id=null){
+ if(id && !articles.find(a=>a.id===id))return toast("Artikel tidak ditemukan");
+ editingId=id;
+ const a=id?articles.find(x=>x.id===id):null;
+ if(a && a.ownerId!==user?.uid)return toast("Kamu bukan pemilik artikel ini.");
+ if(a && String(a.id).startsWith("demo-"))return toast("Artikel demo hanya untuk dibaca.");
+ document.getElementById("main").innerHTML=`<div class="editor"><div class="crumb" onclick="window.home()">← Kembali</div><h1>${a?"Edit artikel":"Buat artikel"}</h1><p class="muted">Artikel akan disimpan ke Cloud Firestore menggunakan akun Google kamu.</p><input id="etitle" class="title" placeholder="Judul artikel..." value="${esc(a?.title||"")}"><div class="fields"><input id="ecat" class="field" placeholder="Kategori" value="${esc(a?.category||"Lainnya")}"><input id="etags" class="field" placeholder="tag1, tag2, tag3" value="${esc((a?.tags||[]).join(", "))}"></div><input id="edesc" class="field" style="margin-bottom:10px" placeholder="Deskripsi singkat" value="${esc(a?.desc||"")}"><div class="toolbar"><button class="tool" onclick="window.insertText('## ')">H2</button><button class="tool" onclick="window.wrapText('**','**')"><b>B</b></button><button class="tool" onclick="window.wrapText('*','*')"><i>I</i></button><button class="tool" onclick="window.insertText('> ')">❝</button></div><textarea id="ebody" placeholder="Tulis dokumentasi kamu...">${a?esc(plain(a.content||"")):""}</textarea><div class="editorbar"><span class="muted">☁ Cloud Firestore</span><div><button class="btn" onclick="window.home()">Batal</button> <button class="btn primary" onclick="window.saveArticle()">Terbitkan</button></div></div></div>`;
+}
+window.renderEditor=renderEditor;
+window.insertText=t=>{const e=document.getElementById("ebody"),p=e.selectionStart;e.value=e.value.slice(0,p)+t+e.value.slice(p);e.focus();e.selectionStart=e.selectionEnd=p+t.length};
+window.wrapText=(x,y)=>{const e=document.getElementById("ebody"),s=e.selectionStart,t=e.selectionEnd,v=e.value.slice(s,t)||"teks";e.value=e.value.slice(0,s)+x+v+y+e.value.slice(t);e.focus()};
+async function saveArticle(){
+ if(!user)return login();
+ const title=document.getElementById("etitle").value.trim()||"Tanpa judul",category=document.getElementById("ecat").value.trim()||"Lainnya",tags=document.getElementById("etags").value.split(",").map(x=>x.trim()).filter(Boolean),desc=document.getElementById("edesc").value.trim(),content=markdown(document.getElementById("ebody").value);
+ try{
+  if(editingId){
+   const ref=doc(db,"articles",editingId),snap=await getDoc(ref);
+   if(!snap.exists()||snap.data().ownerId!==user.uid)return toast("Tidak punya izin mengedit.");
+   await updateDoc(ref,{title,category,tags,desc,content,version:(snap.data().version||1)+1,updatedAt:serverTimestamp()});
+   toast("Artikel diperbarui");
+  }else{
+   const ref=await addDoc(collection(db,"articles"),{title,category,tags,desc,content,authorId:user.uid,authorName:user.displayName||"Kontributor",authorPhoto:user.photoURL||"",ownerId:user.uid,views:0,version:1,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});
+   toast("Artikel diterbitkan");
+   editingId=ref.id;
+  }
+  setTimeout(()=>window.home(),400);
+ }catch(e){console.error(e);toast("Gagal menyimpan: "+(e.code||e.message))}
+}
+window.saveArticle=saveArticle;
+async function removeArticle(id){
+ if(!user)return;
+ if(!confirm("Hapus artikel ini?"))return;
+ try{
+  const ref=doc(db,"articles",id),snap=await getDoc(ref);
+  if(!snap.exists()||snap.data().ownerId!==user.uid)return toast("Tidak punya izin menghapus.");
+  await deleteDoc(ref);toast("Artikel dihapus");home();
+ }catch(e){toast("Gagal menghapus: "+(e.code||e.message))}
+}
+window.removeArticle=removeArticle;
+function editArticle(id){renderEditor(id)} window.editArticle=editArticle;
+function searchArticles(){
+ const q=document.getElementById("search").value.trim().toLowerCase();if(!q)return home();
+ const all=[...articles,...demo],f=all.filter(a=>(a.title+" "+a.desc+" "+(a.tags||[]).join(" ")+" "+a.category).toLowerCase().includes(q));
+ document.getElementById("main").innerHTML=`<div class="crumb" onclick="window.home()">← Beranda</div><h1>Hasil pencarian</h1><p class="muted">${f.length} hasil untuk “${esc(q)}”</p><section class="section"><div class="cards">${f.length?f.map(card).join(""):`<div class="empty">Tidak menemukan apa pun.</div>`}</div></section>`;
+}
+window.searchArticles=searchArticles;
+function saved(){document.getElementById("main").innerHTML=`<h1>Tersimpan</h1><div class="empty">Bookmark akan dibuat pada tahap berikutnya. Untuk sekarang, fokusnya memastikan artikel benar-benar hidup di server.</div>`;setNav("saved")}
+function profile(){
+ if(!user){login();return}
+ const mine=articles.filter(a=>a.ownerId===user.uid);
+ document.getElementById("main").innerHTML=`<h1>Profil saya</h1><section class="section profile"><div class="box"><img class="avatar" src="${esc(user.photoURL||"")}"><h2>${esc(user.displayName||"Pengguna")}</h2><p class="muted">${esc(user.email||"")}</p><small class="muted">UID: ${esc(user.uid)}</small></div><div class="box"><h2>Artikel saya</h2>${mine.length?mine.map(a=>`<div class="listrow" onclick='window.openArticle(${JSON.stringify(a.id)})'><h3>${esc(a.title)}</h3><p>${esc(a.desc||"")}</p></div>`).join(""):`<div class="empty">Belum membuat artikel.</div>`}</div></section>`;
+}
+function about(){toast(user?`Backend aktif · Google: ${user.email}`:"Backend siap · Belum login")}
+window.login=login;window.logout=logout;window.requireLogin=requireLogin;window.home=home;window.explore=explore;window.saved=saved;window.profile=profile;window.about=about;
+home();
+</script>
+</body>
+</html>
