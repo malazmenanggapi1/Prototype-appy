@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Atlasia — Knowledge Platform</title>
+<style>
+:root{
+  --bg:#f6f7f9; --sidebar:#f0f2f5; --surface:#fff; --surface-2:#fafbfc;
+  --text:#20242a; --muted:#707985; --faint:#9aa2ad;
+  --line:#dfe3e8; --line-strong:#cbd1d9;
+  --accent:#6758c9; --accent-soft:#eeeaff;
+  --success:#2d8a5b; --danger:#c84e64;
+  --sidebar-w:238px; --content:1160px;
+}
+*{box-sizing:border-box}
+html{background:var(--bg);color-scheme:light}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.top{height:58px;display:flex;align-items:center;gap:12px;padding:0 18px;position:sticky;top:0;z-index:100;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.logo{min-width:var(--sidebar-w);font-size:19px;font-weight:900;letter-spacing:-.8px;color:var(--accent);cursor:pointer}.logo span{color:var(--text)}
+.search{flex:1;max-width:680px;position:relative}.search:before{content:"⌕";position:absolute;left:12px;top:4px;color:#8a929d;font-size:21px}
+.search input{width:100%;height:36px;padding:0 70px 0 35px;border:1px solid var(--line);border-radius:8px;background:#f7f8fa;color:var(--text);outline:0}.search input:focus{border-color:#b9b1e2;box-shadow:0 0 0 3px rgba(103,88,201,.08);background:#fff}
+.actions{margin-left:auto;display:flex;gap:7px;align-items:center}.btn{padding:7px 11px;border:1px solid var(--line);border-radius:7px;background:#fff;color:#4e5661;font-size:12px;font-weight:750}.btn:hover{background:#f0f2f5}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}.btn.primary:hover{background:#5849b8}
+.user{display:flex;align-items:center;gap:7px;padding:2px 4px 2px 2px;border:1px solid var(--line);border-radius:8px;background:#fff}.user img{width:28px;height:28px;border-radius:50%;object-fit:cover}.user span{max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;font-weight:700}
+.layout{display:grid;grid-template-columns:var(--sidebar-w) minmax(0,1fr);max-width:1480px;margin:auto}.side{height:calc(100vh - 58px);position:sticky;top:58px;overflow:auto;padding:15px 10px;background:var(--sidebar);border-right:1px solid var(--line)}.navtitle{margin:16px 8px 6px;color:#8b939e;font-size:9px;font-weight:850;text-transform:uppercase;letter-spacing:.1em}.nav{display:flex;align-items:center;gap:8px;padding:7px 8px;margin:2px 0;border-radius:7px;color:#5f6873;font-size:12px;font-weight:650;cursor:pointer}.nav:hover{background:#e5e8ec;color:var(--text)}.nav.active{background:var(--accent-soft);color:var(--accent)}
+.main{min-width:0;width:100%;max-width:calc(var(--content) + 40px);padding:30px 34px 70px;margin:auto}
+h1,h2,h3,h4{color:var(--text)}.muted{color:var(--muted)}
+.hero{padding:34px 32px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 7px 25px rgba(30,36,45,.05)}.hero h1{margin:0 0 10px;font-size:36px;line-height:1.12;letter-spacing:-1.5px}.hero p{max-width:760px;margin:0 0 18px;color:#59616d;line-height:1.65;font-size:14px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:12px}.stat{padding:14px 16px;background:#fff;border:1px solid var(--line);border-radius:9px}.stat b{font-size:19px}.stat small{display:block;margin-top:3px;color:var(--muted);font-size:10.5px}
+.section{margin-top:29px}.sectionhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:11px}.section h2{margin:0;font-size:18px;letter-spacing:-.3px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.card{display:flex;flex-direction:column;min-height:145px;padding:15px;background:#fff;border:1px solid var(--line);border-radius:9px;cursor:pointer;transition:.12s}.card:hover{border-color:var(--line-strong);box-shadow:0 7px 22px rgba(30,36,45,.06);transform:translateY(-1px)}.card .icon{width:29px;height:29px;display:grid;place-items:center;background:var(--accent-soft);border:1px solid #ddd7fa;border-radius:7px;color:var(--accent)}.card h3{font-size:14px;margin:9px 0 5px}.card p{margin:0;flex:1;color:var(--muted);font-size:12px;line-height:1.5}.meta{margin-top:9px;color:#9aa2ad;font-size:10px}.tag{display:inline-block;margin:7px 3px 0 0;padding:2px 6px;border-radius:5px;background:#f0f2f5;border:1px solid #e1e4e8;color:#6e7680;font-size:9px;font-weight:750}
+.crumb-container{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:13px;color:var(--muted);font-size:11px}.crumb-item{color:var(--accent);cursor:pointer}.crumb-sep{color:#aab1ba}
+.article{width:100%;max-width:var(--content);margin:auto}.article h1{margin:0 0 7px;font-size:37px;line-height:1.1;letter-spacing:-1.4px}.lead{max-width:800px;margin:0;color:var(--muted);font-size:14.5px;line-height:1.65}.articlegrid{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:30px;margin-top:21px}.content{min-width:0;color:#3f464e;font-size:15.5px;line-height:1.82}.content p{max-width:790px}.content h2{margin:31px 0 10px;padding-bottom:7px;border-bottom:1px solid var(--line);font-size:20px}.content blockquote{max-width:790px;margin:17px 0;padding:11px 14px;border-left:2px solid var(--accent);background:#f4f2ff;border-radius:0 7px 7px 0;color:#554d73}
+.info{position:sticky;top:75px;padding-left:16px;border-left:1px solid var(--line)}.info h3{margin:0 0 7px;color:#858d98;font-size:9px;text-transform:uppercase;letter-spacing:.1em}.row{padding:8px 0;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:2px;font-size:11px}.row b{color:#7d8691;font-size:9.5px}
+.tree-card{padding:12px;margin-bottom:15px;background:#fff;border:1px solid var(--line);border-radius:9px}.tree-title{margin-bottom:8px;color:#858d98;font-size:9px;font-weight:850;text-transform:uppercase;letter-spacing:.1em}.tree-list{list-style:none;padding:0;margin:0}.tree-list.nested{margin-left:8px;padding-left:14px;border-left:1px solid #dfe3e8}.tree-node{display:flex;align-items:center;gap:7px;padding:5px 6px;border-radius:6px;color:#606a75;font-size:11px;font-weight:650;cursor:pointer}.tree-node:hover{background:#f0f2f5}.tree-node.active{background:var(--accent-soft);color:var(--accent)}
+.subpages-box{margin-top:26px;padding:16px;background:#fff;border:1px solid var(--line);border-radius:9px}.subpages-header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}.subpages-header h3{margin:0;font-size:14px}.subpages-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.subpage-card{padding:11px;background:#f8f9fb;border:1px solid var(--line);border-radius:7px;cursor:pointer}.subpage-card:hover{background:#f0f2f5}.subpage-card h4{margin:0 0 4px;font-size:12.5px;color:var(--accent)}.subpage-card p{margin:0;color:var(--muted);font-size:11px}
+.explore{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.cat{padding:15px;background:#fff;border:1px solid var(--line);border-radius:9px;cursor:pointer}.cat:hover{background:#fbfbfc;border-color:var(--line-strong)}.cat .icon{color:var(--accent)}.cat b{display:block;margin-top:9px;font-size:12.5px}.cat small{display:block;margin-top:3px;color:var(--muted);font-size:10.5px}
+.empty{padding:42px 18px;text-align:center;color:var(--muted);background:#fff;border:1px dashed var(--line-strong);border-radius:9px}
+.profile{display:grid;grid-template-columns:220px minmax(0,1fr);gap:12px}.box{padding:17px;background:#fff;border:1px solid var(--line);border-radius:9px}.avatar{width:66px;height:66px;border-radius:50%;object-fit:cover}.listrow{padding:12px 0;border-bottom:1px solid var(--line);cursor:pointer}.listrow h3{margin:0 0 4px;font-size:13px}.listrow p{margin:0;color:var(--muted);font-size:11px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:8px}.field,.editor textarea{border:1px solid var(--line);background:#fff;color:var(--text);border-radius:8px;outline:0}.field{width:100%;padding:9px 11px}.field:focus,.editor textarea:focus{border-color:#b9b1e2;box-shadow:0 0 0 3px rgba(103,88,201,.07)}.editor{max-width:900px;margin:auto}.title{width:100%;border:0;outline:0;background:transparent;color:var(--text);font-size:31px;font-weight:850;padding:5px 0 12px}.toolbar{display:flex;gap:4px;flex-wrap:wrap;padding:6px;background:#fff;border:1px solid var(--line);border-bottom:0;border-radius:8px 8px 0 0}.tool{padding:5px 8px;border:1px solid var(--line);border-radius:6px;background:#f3f4f6;color:#59616c;font-weight:800}.editor textarea{display:block;width:100%;min-height:430px;padding:17px;resize:vertical;line-height:1.7}.editorbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:9px}
+.badge{display:inline-block;padding:2px 7px;border:1px solid #d8dde3;border-radius:999px;background:#f1f3f5;color:#68717c;font-size:9px;font-weight:800}.badge.owner{background:#fff5e4;color:#98671f;border-color:#eed7ad}.badge.editor{background:#eaf5fb;color:#3b7895;border-color:#c8e1ed}.badge.contributor{background:#eaf7ef;color:#328159;border-color:#c7e4d2}.badge.viewer{background:#f0f2f4;color:#747d87}.grouphead{margin:17px 0 8px;color:#7d8691;font-size:9.5px;font-weight:850;text-transform:uppercase}.memberrow{display:flex;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--line)}.memberrow span.who{flex:1;font-size:11px;font-weight:700}.memberrow select{padding:4px 6px;border:1px solid var(--line);border-radius:6px;background:#fff}
+.revrow{display:flex;align-items:center;gap:8px;padding:9px 0;border-top:1px solid var(--line);cursor:pointer}.revrow.selected{background:var(--accent-soft)}.diffwrap{padding:16px;background:#fff;border:1px solid var(--line);border-radius:9px;font-size:12.5px;line-height:1.75}
+.modal-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;z-index:1000;background:rgba(30,35,42,.38);backdrop-filter:blur(4px)}.modal-card{width:100%;max-width:430px;padding:20px;background:#fff;border:1px solid var(--line-strong);border-radius:10px;box-shadow:0 22px 55px rgba(30,35,45,.18)}.modal-card h3{margin:0 0 7px}.modal-card p{margin:0 0 16px;color:var(--muted);font-size:12.5px;line-height:1.55}.modal-actions{display:flex;justify-content:flex-end;gap:7px}.toast{position:fixed;right:16px;bottom:16px;padding:9px 13px;background:#20242a;color:#fff;border-radius:8px;font-size:11px;z-index:9999}
+@media(max-width:1150px){:root{--sidebar-w:210px}.main{padding:26px 24px}.cards{grid-template-columns:repeat(2,1fr)}.explore{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:900px){.logo{min-width:105px}.side{display:none}.layout{display:block}.main{padding:22px 18px}.articlegrid{grid-template-columns:1fr}.info{position:static;padding:14px 0 0;border-left:0;border-top:1px solid var(--line)}.profile{grid-template-columns:1fr}}
+@media(max-width:600px){.top{padding:0 9px}.logo{font-size:18px;min-width:auto}.actions .btn{display:none}.user span{display:none}.main{padding:16px 13px 45px}.hero{padding:25px 20px}.hero h1{font-size:29px}.stats,.cards,.explore,.fields{grid-template-columns:1fr}.article h1{font-size:29px}.subpages-grid{grid-template-columns:1fr}}
+
+/* Hierarchy fix: context navigation, not a global article catalog */
+.tree-card{max-height:540px;overflow:auto}
+.tree-card .tree-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tree-list .tree-item{max-width:100%}
+.tree-node span:last-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:normal;line-height:1.25}
+
+#account{min-width:max-content}
+#account .btn:disabled{opacity:.7;cursor:default}
+
+.auth-state{
+  display:flex;align-items:center;gap:7px;
+  padding:6px 9px;margin:0 0 14px;
+  border:1px solid var(--line);border-radius:7px;
+  background:#fff;color:var(--muted);font-size:10.5px;
+}
+.auth-state.ok{border-color:#cde5d7;background:#f1faf5;color:#317952}
+.auth-state .dot{width:6px;height:6px;border-radius:50%;background:#9ca4ae}
+.auth-state.ok .dot{background:#42a46d}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="logo" onclick="home()">Atlas<span>ia</span></div>
+  <div class="search"><input id="search" placeholder="Search Atlasia..." onkeydown="if(event.key==='Enter')searchArticles()"></div>
+  <div class="actions">
+    <button class="btn" onclick="explore()">Explore</button>
+    <button class="btn primary" onclick="requireLogin()">＋ Create</button>
+    <div id="account"><button class="btn" disabled>Memuat...</button></div>
+  </div>
+</header>
+<div class="layout">
+<aside class="side">
+  <div class="navtitle">Workspace</div>
+  <div class="nav active" id="nav-home" onclick="home()">⌂ Home</div>
+  <div class="nav" id="nav-explore" onclick="explore()">◈ Explore</div>
+  <div class="nav" id="nav-spaces" onclick="spacesPage()">🌎 Spaces</div>
+  <div class="nav" id="nav-saved" onclick="saved()">☆ Saved</div>
+  <div class="nav" id="nav-recent" onclick="home()">◷ Recent</div>
+  <div class="navtitle">Account</div>
+  <div class="nav" onclick="profile()">● My profile</div>
+  <div class="nav" onclick="requireLogin()">＋ New article</div>
+</aside>
+<main class="main" id="main"></main>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-analytics.js";
+import {
+  getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged, setPersistence, browserLocalPersistence
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+import {
+  getFirestore, collection, addDoc, doc, getDoc, getDocs, setDoc, updateDoc, deleteDoc,
+  onSnapshot, query, where, orderBy, limit, serverTimestamp, increment, deleteField
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+const firebaseConfig={
+  apiKey:"AIzaSyDX-qfSxXMSHr5m3Kfp1qHyHgwiF1xB-Lo",
+  authDomain:"first-prototype-wiki.firebaseapp.com",
+  projectId:"first-prototype-wiki",
+  storageBucket:"first-prototype-wiki.firebasestorage.app",
+  messagingSenderId:"506146325520",
+  appId:"1:506146325520:web:8266348a56eb9b3cae3695",
+  measurementId:"G-E1XZ1F6X42"
+};
+
+const app=initializeApp(firebaseConfig);
+try{getAnalytics(app)}catch(e){}
+const auth=getAuth(app), db=getFirestore(app);
+const provider=new GoogleAuthProvider();
+provider.setCustomParameters({prompt:"select_account"});
+
+let user=null, articles=[], spaces=[], unsub=null, unsubSpacess=null, editingId=null, editingSpacesId=null;
+const viewedArticlesThisSession = new Set();
+
+let rerenderCurrent=()=>home();
+function parseHashArticleId(){const m=location.hash.match(/^#\/article\/(.+)$/);return m?decodeURIComponent(m[1]):null}
+function findSpaces(id){return spaces.find(s=>s.id===id)||demoSpacess.find(s=>s.id===id)}
+function spaceRole(space){
+ if(!space||!user)return null;
+ if(space.ownerId===user.uid)return "owner";
+ return space.members?.[user.uid]||null;
+}
+function canCreateInSpaces(space){const r=spaceRole(space);return r==="owner"||r==="editor"||r==="contributor"}
+function canManageSpaces(space){return spaceRole(space)==="owner"}
+function canEditArticle(a){
+ if(!user)return false;
+ if(a.ownerId===user.uid||a.authorId===user.uid)return true;
+ if(a.spaceId){const r=spaceRole(findSpaces(a.spaceId));if(r==="owner"||r==="editor")return true}
+ return false;
+}
+function canDeleteArticle(a){return canEditArticle(a)}
+function roleLabel(r){return {owner:"Owner",editor:"Editor",contributor:"Contributor",viewer:"Viewer"}[r]||"Viewer"}
+
+/* Demo Spacess & Hierarchical Articles */
+const demoSpacess = [
+ {id:"space-demo-1",name:"Sejarah Sendok Dapur",desc:"Dokumentasi lengkap variasi Sendok & Garpu dengan struktur sub-artikel",ownerId:"demo-user",ownerName:"Nara"},
+ {id:"space-demo-2",name:"Asteria Universe",desc:"Dokumentasi worldbuilding fiksi: negara, energi, sejarah & karakter",ownerId:"demo-user",ownerName:"Rin"}
+];
+
+const demo=[
+ // Tree 1: Sendok Dapur
+ {id:"demo-1",spaceId:"space-demo-1",parentId:null,title:"Sejarah Sendok Dapur & Alat Makan",category:"Panduan",tags:["peralatan","sejarah","kuliner"],desc:"Dokumentasi utama tentang perkembangan sendok dan alat makan.",author:"Nara",views:1842,version:3,content:"<p>Sendok dapur adalah salah satu alat makan tertua manusia. Dokumentasi ini terbagi menjadi beberapa kelompok sub-halaman di bawah.</p><h2>Struktur Dokumentasi</h2><p>Pilih sub-kelompok di bawah atau gunakan hierarki pohon di samping untuk berpindah antar sub-artikel.</p>"},
+ {id:"demo-1-1",spaceId:"space-demo-1",parentId:"demo-1",title:"Kelompok Sendok",category:"Panduan",tags:["sendok","variasi"],desc:"Koleksi dan variasi jenis sendok makan.",author:"Nara",views:920,version:1,content:"<p>Kelompok sendok mencakup alat makan cekung dengan gagang panjang untuk cairan atau makanan padat.</p>"},
+ {id:"demo-1-1-1",spaceId:"space-demo-1",parentId:"demo-1-1",title:"Sendok Makan Stainless A",category:"Panduan",tags:["sendok","metal"],desc:"Spesifikasi sendok bahan stainless steel 304.",author:"Nara",views:410,version:1,content:"<p>Sendok Stainless Steel A tahan karat dan memiliki kekuatan mekanis tinggi terhadap asam makanan.</p>"},
+ {id:"demo-1-1-2",spaceId:"space-demo-1",parentId:"demo-1-1",title:"Sendok Bebek Ceramic B",category:"Panduan",tags:["sendok","keramik"],desc:"Karakteristik sendok sup tradisional keramik.",author:"Nara",views:305,version:1,content:"<p>Sendok bebek keramik memiliki dasar datar khusus untuk menampung kuah panas tanpa mentransfer panas berlebih ke jari.</p>"},
+ {id:"demo-1-2",spaceId:"space-demo-1",parentId:"demo-1",title:"Kelompok Garpu",category:"Panduan",tags:["garpu","variasi"],desc:"Evolusi garpu penusuk dari 2 gigi hingga 4 gigi modern.",author:"Dimas",views:512,version:1,content:"<p>Garpu pertama kali digunakan di Kekaisaran Bizantium sebelum menjadi standar alat makan dunia.</p>"},
+
+ // Tree 2: Asteria Universe
+ {id:"demo-2",spaceId:"space-demo-2",parentId:null,title:"Asteria Universe",category:"Fiksi & Dunia",tags:["worldbuilding","fiksi"],desc:"Pusat dokumentasi dunia Asteria.",author:"Rin",views:3250,version:2,content:"<p>Asteria adalah dunia fiksi dengan sejarah lebih dari 4.000 tahun.</p><h2>Sub-Dunia & Topik</h2><p>Artikel ini menjadi induk untuk geografi, faksi, teknologi, dan sejarah Asteria.</p>"},
+ {id:"demo-2-1",spaceId:"space-demo-2",parentId:"demo-2",title:"Dunia Asteria & Geografi",category:"Fiksi & Dunia",tags:["geografi","dunia"],desc:"Wilayah utama dan benua Asteria.",author:"Rin",views:1420,version:1,content:"<p>Asteria terbagi atas benua Lunaria dan Dorskan.</p>"},
+ {id:"demo-2-1-1",spaceId:"space-demo-2",parentId:"demo-2-1",title:"Kerajaan Lunareth",category:"Fiksi & Dunia",tags:["kerajaan"],desc:"Kerajaan kuno di lembah kristal Arca.",author:"Rin",views:890,version:1,content:"<p>Lunareth dipimpin oleh Dewan Kristal yang menjaga tradisi Arca murni.</p>"},
+ {id:"demo-2-1-2",spaceId:"space-demo-2",parentId:"demo-2-1",title:"Republik Dorska",category:"Fiksi & Dunia",tags:["republik"],desc:"Negara industri berbasis teknologi uap Arca.",author:"Rin",views:740,version:1,content:"<p>Republik Dorska mengembangkan industri mekanis mandiri.</p>"},
+ {id:"demo-2-2",spaceId:"space-demo-2",parentId:"demo-2",title:"Sistem Energi Arca",category:"Fiksi & Dunia",tags:["energi","magic"],desc:"Prinsip kerja dan kristalisasi Arca.",author:"Rin",views:1100,version:1,content:"<p>Masyarakat Asteria memanfaatkan Arca sebagai sumber tenaga utama.</p>"}
+];
+
+function esc(s=""){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+function ts(a){return a?.updatedAt?.toDate?.()?.toLocaleDateString("id-ID")||"baru saja"}
+function setNav(page){document.querySelectorAll(".nav").forEach(x=>x.classList.remove("active"));let n=document.getElementById("nav-"+page);if(n)n.classList.add("active")}
+
+/* Modal Dialog Helper (Replacing alert/confirm) */
+function showModal({title, message, confirmText="Ya, Lanjutkan", cancelText="Cancel", onConfirm}) {
+ const el=document.createElement("div");
+ el.className="modal-overlay";
+ el.innerHTML=`<div class="modal-card"><h3>${esc(title)}</h3><p>${esc(message)}</p><div class="modal-actions"><button class="btn" id="m-cancel">${esc(cancelText)}</button>${onConfirm?`<button class="btn danger" id="m-ok">${esc(confirmText)}</button>`:""}</div></div>`;
+ document.body.appendChild(el);
+ el.querySelector("#m-cancel").onclick=()=>el.remove();
+ if(onConfirm){
+   el.querySelector("#m-ok").onclick=()=>{
+     el.remove();
+     onConfirm();
+   };
+ }
+}
+
+function toast(s){
+ const x=document.createElement("div");x.className="toast";x.textContent=s;document.body.appendChild(x);
+ setTimeout(()=>x.remove(),2400);
+}
+
+function card(a){
+ const all=[...articles,...demo];
+ const hasSub=all.some(x=>x.parentId===a.id);
+ return `<article class="card" onclick='window.openArticle(${JSON.stringify(a.id)})'><div style="display:flex;align-items:center;justify-content:space-between"><div class="icon">${a.category?.includes("Fiksi")?"✦":a.category?.includes("Sains")?"◉":a.category?.includes("Tekno")?"⚙":"▤"}</div>${hasSub?`<span class="badge">📂 Memiliki Sub-artikel</span>`:""}</div><h3>${esc(a.title)}</h3><p>${esc(a.desc||"Belum ada deskripsi.")}</p><div>${(a.tags||[]).map(t=>`<span class="tag">#${esc(t)}</span>`).join("")}</div><div class="meta">${esc(a.authorName||a.author||"Contributor")} · ${Number(a.views||0).toLocaleString()} dilihat · ${ts(a)}</div></article>`;
+}
+
+function home(){
+ rerenderCurrent=home;
+ if(location.hash)history.pushState(null,'',location.pathname+location.search);
+ setNav("home");
+ const all=[...articles,...demo], popular=[...all].sort((a,b)=>(b.views||0)-(a.views||0)).slice(0,3);
+ document.getElementById("main").innerHTML=`<section class="hero"><h1>A structured home for knowledge.</h1><p>Document worldbuilding, research, projects, and ideas in a clear hierarchy, with version history and collaboration.</p><button class="btn" onclick="window.requireLogin()">＋ New article</button></section>
+ <div class="stats"><div class="stat"><b>${articles.length}</b><small>Published articles</small></div><div class="stat"><b>${[...spaces,...demoSpacess].length}</b><small>Spaces Aktif</small></div><div class="stat"><b>Hierarchy</b><small>Sub-halaman Aktif</small></div></div>
+ <section class="section"><div class="sectionhead"><h2>Popular</h2><span class="muted">Artikel paling banyak dilihat</span></div><div class="cards">${popular.map(card).join("")}</div></section>
+ <section class="section"><div class="sectionhead"><h2>Recent articles</h2></div><div class="cards">${all.slice(-6).reverse().map(card).join("")}</div></section>`;
+}
+
+function explore(){
+ rerenderCurrent=explore;
+ if(location.hash)history.pushState(null,'',location.pathname+location.search);
+ setNav("explore");
+ const cats=[["✦","Fiksi & Dunia","Worldbuilding dan universe"],["◉","Sains & Alam","Fenomena dan observasi"],["⚙","Teknologi","Mesin dan engineering"],["▤","Panduan","Tutorial dan dokumentasi"],["♜","Sejarah","Timeline dan peristiwa"],["☄","Eksperimen","Konsep dan eksperimen"],["◈","Proyek","Proyek pribadi"],["…","Lainnya","Topik lain"]];
+ document.getElementById("main").innerHTML=`<h1>Explore</h1><p class="muted">Browse knowledge by category.</p><section class="section"><div class="explore">${cats.map(c=>`<div class="cat" onclick='window.filterCat(${JSON.stringify(c[1])})'><div class="icon">${c[0]}</div><b>${c[1]}</b><small>${c[2]}</small></div>`).join("")}</div></section><section class="section"><div class="sectionhead"><h2>All articles</h2><span class="muted">${articles.length}</span></div><div class="cards">${articles.length?articles.map(card).join(""):`<div class="empty">Belum ada artikel online.</div>`}</div></section>`;
+}
+
+window.filterCat=(cat)=>{
+ rerenderCurrent=()=>window.filterCat(cat);
+ if(location.hash)history.pushState(null,'',location.pathname+location.search);
+ const f=[...articles,...demo].filter(a=>a.category===cat);
+ document.getElementById("main").innerHTML=`<div class="crumb-container"><span class="crumb-item" onclick="window.explore()">← Explore</span></div><h1>${esc(cat)}</h1><p class="muted">${f.length} artikel</p><section class="section"><div class="cards">${f.length?f.map(card).join(""):`<div class="empty">Belum ada artikel dalam kategori ini.</div>`}</div></section>`;
+};
+
+/* Breadcrumb Builder */
+function getBreadcrumbs(articleId){
+ const all=[...articles,...demo];
+ const trail=[];
+ let curr=all.find(a=>a.id===articleId);
+ const visited=new Set();
+ while(curr && !visited.has(curr.id)){
+   visited.add(curr.id);
+   trail.unshift(curr);
+   if(curr.parentId){
+     curr=all.find(a=>a.id===curr.parentId);
+   } else {
+     break;
+   }
+ }
+ return trail;
+}
+
+/* Tree Component Renderer for Spaces / Root Article */
+function renderTreeHTML(parentId=null, spaceId=null, currentArticleId=null, level=0, rootArticleId=null){
+ const all=[...articles,...demo];
+
+ // Spaces intentionally contain several root articles.
+ // Standalone articles do not: only the current article's own branch belongs here.
+ let children;
+ if(spaceId){
+   children=all.filter(a=>{
+     if(a.spaceId!==spaceId)return false;
+     if(parentId===null)return !a.parentId;
+     return a.parentId===parentId;
+   });
+ }else if(level===0){
+   const root=all.find(a=>a.id===rootArticleId);
+   children=root?[root]:[];
+ }else{
+   children=all.filter(a=>a.parentId===parentId && !a.spaceId);
+ }
+
+ if(!children.length)return "";
+ return `<ul class="tree-list ${level>0?"nested":""}">`+children.map(child=>{
+   const sub=renderTreeHTML(child.id, spaceId, currentArticleId, level+1, rootArticleId);
+   const isActive=child.id===currentArticleId?"active":"";
+   return `<li class="tree-item">
+     <div class="tree-node ${isActive}" onclick='window.openArticle(${JSON.stringify(child.id)})'>
+       <span class="tree-icon">${sub?"📂":"📄"}</span>
+       <span>${esc(child.title)}</span>
+     </div>
+     ${sub}
+   </li>`;
+ }).join("")+`</ul>`;
+}
+
+/* Render Main Article View with Hierarchy & Sub-pages */
+function renderArticleUI(id){
+ const all=[...articles,...demo];
+ const a=all.find(x=>x.id===id);
+ if(!a)return toast("Artikel tidak ditemukan");
+ rerenderCurrent=()=>renderArticleUI(id);
+ setNav("");
+ const isDemo=String(a.id).startsWith("demo-");
+ const sp=a.spaceId?findSpaces(a.spaceId):null;
+
+ const breadcrumbs=getBreadcrumbs(id);
+ const directSubArticles=all.filter(x=>x.parentId===id);
+ const rootArticleId=getBreadcrumbs(id)[0]?.id||id;
+ const treeHTML=renderTreeHTML(null, a.spaceId, id, 0, rootArticleId);
+
+ document.getElementById("main").innerHTML=`
+ <div class="article">
+   <!-- Breadcrumbs -->
+   <div class="crumb-container">
+     <span class="crumb-item" onclick="window.home()">Home</span>
+     ${sp?`<span class="crumb-sep">/</span> <span class="crumb-item" onclick='window.openSpaces(${JSON.stringify(sp.id)})'>🌎 ${esc(sp.name)}</span>`:""}
+     ${breadcrumbs.map((b,i)=>i===breadcrumbs.length-1?`<span class="crumb-sep">/</span> <span>${esc(b.title)}</span>`:`<span class="crumb-sep">/</span> <span class="crumb-item" onclick='window.openArticle(${JSON.stringify(b.id)})'>${esc(b.title)}</span>`).join("")}
+   </div>
+
+   <div class="sectionhead" style="align-items:flex-start;margin-bottom:6px">
+     <div>
+       <h1>${esc(a.title)}</h1>
+       <p class="lead">${esc(a.desc||"")}</p>
+     </div>
+   </div>
+
+   <div class="meta" style="margin-top:0;margin-bottom:16px">
+     ${esc(a.authorName||a.author||"Contributor")} · ${ts(a)} · Version ${a.version||1}
+   </div>
+
+   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px">
+     ${canEditArticle(a)?`<button class="btn" onclick='window.editArticle(${JSON.stringify(a.id)})'>✎ Edit</button>`:""}
+     <button class="btn primary" onclick='window.createSubPage(${JSON.stringify(a.id)})'>＋ Add subpage</button>
+     ${!isDemo?`<button class="btn" onclick='window.openRevisions(${JSON.stringify(a.id)})'>🕐 Version history</button>`:""}
+     ${canDeleteArticle(a)?`<button class="btn danger" onclick='window.removeArticle(${JSON.stringify(a.id)})'>Delete</button>`:""}
+   </div>
+
+   <div class="articlegrid">
+     <div>
+       <div class="content">
+         ${a.content||"<p>Belum ada isi artikel.</p>"}
+         <h2 style="margin-top:30px">Tag</h2>
+         ${(a.tags||[]).map(t=>`<span class="tag">#${esc(t)}</span>`).join("")}
+       </div>
+
+       <!-- Sub-pages section (Articles inside this Article) -->
+       <div class="subpages-box">
+         <div class="subpages-header">
+           <h3>📂 Subpages (${directSubArticles.length})</h3>
+           <button class="btn primary sm" onclick='window.createSubPage(${JSON.stringify(a.id)})'>＋ New subpage</button>
+         </div>
+         ${directSubArticles.length?`
+           <div class="subpages-grid">
+             ${directSubArticles.map(sub=>`
+               <div class="subpage-card" onclick='window.openArticle(${JSON.stringify(sub.id)})'>
+                 <h4>📄 ${esc(sub.title)}</h4>
+                 <p>${esc(sub.desc||"Klik untuk membuka sub-halaman ini.")}</p>
+               </div>
+             `).join("")}
+           </div>
+         `:`<p class="muted" style="margin:0">No subpages under this page yet. Use <b>"+ New subpage"</b> to add a nested page.</p>`}
+       </div>
+     </div>
+
+     <aside>
+       <!-- Page hierarchy -->
+       <div class="tree-card">
+         <div class="tree-title">🌳 Page hierarchy${sp?` · ${esc(sp.name)}`:""}</div>
+         ${treeHTML||'<p class="muted" style="font-size:13px">Single page</p>'}
+       </div>
+
+       <!-- Page metadata -->
+       <div class="box info">
+         <h3>About this page</h3>
+         <div class="row"><b>Category</b><span>${esc(a.category||"Lainnya")}</span></div>
+         <div class="row"><b>Author</b><span>${esc(a.authorName||a.author||"")}</span></div>
+         <div class="row"><b>Views</b><span>${Number(a.views||0).toLocaleString()}</span></div>
+         <div class="row"><b>Version</b><span>${a.version||1}</span></div>
+         <div class="row"><b>Source</b><span>${isDemo?"Demo":"Cloud"}</span></div>
+       </div>
+     </aside>
+   </div>
+ </div>`;
+}
+
+function openArticle(id){
+ const all=[...articles,...demo];
+ let a=all.find(x=>x.id===id);if(!a)return;
+ history.pushState({articleId:id},'','#/article/'+encodeURIComponent(id));
+ 
+ const isDemo=String(a.id).startsWith("demo-");
+ if(!isDemo && !viewedArticlesThisSession.has(id)){
+   viewedArticlesThisSession.add(id);
+   updateDoc(doc(db,"articles",id),{views:increment(1)}).catch(e=>console.warn("View count error:",e));
+ }
+ renderArticleUI(id);
+}
+window.openArticle=openArticle;
+
+function requireLogin(){
+ if(user)renderEditor();
+ else login();
+}
+
+let authReady=false;
+let authBootPromise=null;
+
+function renderAccount(u){
+ const el=document.getElementById("account");
+ if(!el)return;
+ if(u){
+   el.innerHTML=`<div class="user">
+     <img src="${esc(u.photoURL||"")}" onerror="this.style.display='none'">
+     <span>${esc(u.displayName||u.email||"Pengguna")}</span>
+     <button class="btn sm" onclick="window.logout()">Keluar</button>
+   </div>`;
+ }else{
+   el.innerHTML=`<button class="btn primary" onclick="window.login()">Masuk Google</button>`;
+ }
+}
+
+async function login(){
+ if(location.protocol==="file:"){
+   showModal({
+     title:"Perhatian Domain",
+     message:"Untuk menggunakan autentikasi Google, jalankan aplikasi ini melalui HTTP/HTTPS, misalnya GitHub Pages atau local server."
+   });
+   return;
+ }
+
+ try{
+   // Keep the Firebase session across the OAuth redirect.
+   await setPersistence(auth,browserLocalPersistence);
+   // Use popup on mobile too. Firebase documents that redirect auth can
+   // break in browsers that block third-party storage. Popup avoids that
+   // cross-origin redirect storage dependency.
+   const result=await signInWithPopup(auth,provider);
+   if(result?.user){
+     user=result.user;
+     renderAccount(user);
+     await ensureUserProfile(user).catch(()=>{});
+     subscribeArticles();
+     subscribeSpacess();
+     const hid=parseHashArticleId();
+     if(hid) renderArticleUI(hid);
+     else if(typeof rerenderCurrent==="function") rerenderCurrent();
+   }
+ }catch(e){
+   console.error("Google sign-in error:",e);
+   const code=e?.code||"unknown";
+   const detail=e?.message||"Kesalahan autentikasi";
+   if(code==="auth/unauthorized-domain"){
+     toast("Domain belum diizinkan Firebase: "+location.hostname);
+   }else if(code==="auth/popup-blocked"){
+     toast("Popup Google diblokir browser. Izinkan popup untuk situs ini.");
+   }else if(code==="auth/popup-closed-by-user"){
+     toast("Jendela login Google ditutup.");
+   }else{
+     toast("Login gagal ["+code+"]: "+detail);
+   }
+ }
+ }
+}
+
+async function finishRedirectLogin(){
+ try{
+   const result=await getRedirectResult(auth);
+   if(result?.user){
+     user=result.user;
+     renderAccount(user);
+     await ensureUserProfile(user).catch(()=>{});
+   }
+ }catch(e){
+   console.error("Redirect sign-in error:",e);
+   toast("Login Google gagal: "+(e.code||e.message||"Kesalahan autentikasi"));
+ }
+}
+
+async function logout(){
+ try{
+   await signOut(auth);
+   user=null;
+   renderAccount(null);
+   if(unsub){unsub();unsub=null;}
+   if(unsubSpacess){unsubSpacess();unsubSpacess=null;}
+   articles=[];
+   spaces=[];
+   subscribeArticles.booted=false;
+   home();
+   toast("Berhasil logout");
+ }catch(e){
+   console.error(e);
+   toast("Logout gagal: "+(e.code||e.message||"Kesalahan autentikasi"));
+ }
+}
+
+async function ensureUserProfile(u){
+ await setDoc(
+   doc(db,"users",u.uid),
+   {
+     displayName:u.displayName||"Pengguna",
+     photoURL:u.photoURL||"",
+     email:u.email||"",
+     updatedAt:serverTimestamp()
+   },
+   {merge:true}
+ );
+}
+
+async function initAuth(){
+ // Show a stable auth state immediately instead of briefly displaying a logged-out UI.
+ renderAccount(null);
+
+ try{
+   await setPersistence(auth,browserLocalPersistence);
+ }catch(e){
+   console.warn("Auth persistence setup failed:",e);
+ }
+
+ onAuthStateChanged(auth,async u=>{
+   user=u;
+   authReady=true;
+   renderAccount(u);
+
+   if(u){
+     try{await ensureUserProfile(u)}catch(e){console.warn("User profile error:",e)}
+     subscribeArticles();
+     subscribeSpacess();
+   }else{
+     if(unsub){unsub();unsub=null;}
+     if(unsubSpacess){unsubSpacess();unsubSpacess=null;}
+     articles=[];
+     spaces=[];
+     rerenderCurrent=home;
+   }
+ });
+
+ // Compatibility for a stale redirect attempt from an older build.
+ await finishRedirectLogin();
+}
+
+authBootPromise=initAuth();
+
+function subscribeSpacess(){
+ if(unsubSpacess)unsubSpacess();
+ const q=query(collection(db,"spaces"),limit(100));
+ unsubSpacess=onSnapshot(q,snap=>{
+   spaces=snap.docs.map(d=>({id:d.id,...d.data()}));
+   spaces.sort((a,b)=>(a.name||"").localeCompare(b.name||""));
+   rerenderCurrent();
+ },err=>{
+   spaces=[];
+ });
+}
+
+function subscribeArticles(){
+ if(unsub)unsub();
+ subscribeArticles.booted=false;
+ const q=query(collection(db,"articles"),limit(100));
+ unsub=onSnapshot(q,snap=>{
+   articles=snap.docs.map(d=>({id:d.id,...d.data()}));
+   articles.sort((a,b)=>{
+     const ta=a.updatedAt?.toMillis?.()||0, tb=b.updatedAt?.toMillis?.()||0;
+     return tb-ta;
+   });
+   if(!subscribeArticles.booted){
+     subscribeArticles.booted=true;
+     const hid=parseHashArticleId();
+     if(hid && ([...articles,...demo].find(a=>a.id===hid))){renderArticleUI(hid);return}
+   }
+   rerenderCurrent();
+ },err=>{
+   articles=[]; rerenderCurrent();
+ });
+}
+
+function markdown(s){return s.split(/\n\s*\n/).map(x=>{x=x.trim();if(!x)return "";if(x.startsWith("## "))return "<h2>"+esc(x.slice(3))+"</h2>";if(x.startsWith("# "))return "<h2>"+esc(x.slice(2))+"</h2>";if(x.startsWith("> "))return "<blockquote>"+esc(x.slice(2))+"</blockquote>";return "<p>"+esc(x).replace(/\*\*(.*?)\*\*/g,"<b>$1</b>").replace(/\*(.*?)\*/g,"<i>$1</i>")+"</p>"}).join("")}
+function plain(html){return html.replace(/<h2>(.*?)<\/h2>/gi,"## $1\n\n").replace(/<blockquote>(.*?)<\/blockquote>/gi,"> $1\n\n").replace(/<p>(.*?)<\/p>/gi,"$1\n\n").replace(/<[^>]+>/g,"").trim()}
+
+/* Editor UI supporting Sub-article Parent selection */
+function renderEditor(id=null,presetSpacesId=null,presetParentId=null){
+ const all=[...articles,...demo];
+ if(id && !all.find(a=>a.id===id))return toast("Artikel tidak ditemukan");
+ editingId=id;
+ const a=id?all.find(x=>x.id===id):null;
+ if(a && !canEditArticle(a))return toast("Kamu tidak punya izin mengedit artikel ini.");
+ if(a && String(a.id).startsWith("demo-"))return toast("Artikel demo hanya untuk dibaca.");
+
+ const currentSpacesId=a?.spaceId||presetSpacesId||"";
+ const currentParentId=a?.parentId||presetParentId||"";
+
+ const editableSpacess=[...spaces,...demoSpacess].filter(canCreateInSpaces);
+ const spaceOptions=`<option value="">— Tanpa Spaces —</option>`+editableSpacess.map(s=>`<option value="${esc(s.id)}" ${s.id===currentSpacesId?"selected":""}>${esc(s.name)}</option>`).join("");
+
+ // Parents selection list
+ const parentOptions=`<option value="">— Tidak ada (Artikel Utama / Tingkat Teratas) —</option>`+all.filter(x=>x.id!==id).map(p=>`<option value="${esc(p.id)}" ${p.id===currentParentId?"selected":""}>📂 ${esc(p.title)}</option>`).join("");
+
+ document.getElementById("main").innerHTML=`
+ <div class="editor">
+   <div class="crumb-container"><span class="crumb-item" onclick="window.home()">← Back</span></div>
+   <h1>${a?"Edit artikel":"New article / sub-halaman baru"}</h1>
+   <p class="muted">Isi detail di bawah. Kamu bisa menentukan artikel ini sebagai sub-halaman dari artikel lain.</p>
+   
+   <input id="etitle" class="title" placeholder="Judul artikel..." value="${esc(a?.title||"")}">
+   
+   <div class="fields">
+     <div>
+       <label style="font-size:12px;font-weight:700;color:var(--muted)">Induk Artikel (Sub-halaman dari):</label>
+       <select id="eparent" class="field" style="margin-top:4px">${parentOptions}</select>
+     </div>
+     <div>
+       <label style="font-size:12px;font-weight:700;color:var(--muted)">Wadah Spaces:</label>
+       <select id="espace" class="field" style="margin-top:4px">${spaceOptions}</select>
+     </div>
+   </div>
+
+   <div class="fields">
+     <input id="ecat" class="field" placeholder="Category (mis. Panduan, Fiksi)" value="${esc(a?.category||"Lainnya")}">
+     <input id="etags" class="field" placeholder="tag1, tag2, tag3" value="${esc((a?.tags||[]).join(", "))}">
+   </div>
+   
+   <input id="edesc" class="field" style="margin-bottom:10px" placeholder="Deskripsi singkat artikel" value="${esc(a?.desc||"")}">
+   
+   <div class="toolbar">
+     <button class="tool" onclick="window.insertText('## ')">H2</button>
+     <button class="tool" onclick="window.wrapText('**','**')"><b>B</b></button>
+     <button class="tool" onclick="window.wrapText('*','*')"><i>I</i></button>
+     <button class="tool" onclick="window.insertText('> ')">❝</button>
+   </div>
+   <textarea id="ebody" placeholder="Tulis konten artikel kamu di sini...">${a?esc(plain(a.content||"")):""}</textarea>
+   
+   <div class="editorbar">
+     <span class="muted">☁ Cloud Sync</span>
+     <div>
+       <button class="btn" onclick="window.home()">Cancel</button> 
+       <button class="btn primary" onclick="window.saveArticle()">Terbitkan Artikel</button>
+     </div>
+   </div>
+ </div>`;
+}
+window.renderEditor=renderEditor;
+window.createSubPage=(parentId)=>{
+ const p=[...articles,...demo].find(x=>x.id===parentId);
+ if(user) renderEditor(null, p?.spaceId||null, parentId);
+ else login();
+};
+
+window.insertText=t=>{const e=document.getElementById("ebody"),p=e.selectionStart;e.value=e.value.slice(0,p)+t+e.value.slice(p);e.focus();e.selectionStart=e.selectionEnd=p+t.length};
+window.wrapText=(x,y)=>{const e=document.getElementById("ebody"),s=e.selectionStart,t=e.selectionEnd,v=e.value.slice(s,t)||"teks";e.value=e.value.slice(0,s)+x+v+y+e.value.slice(t);e.focus()};
+
+/* Article Saving Logic */
+async function saveArticle(){
+ if(!user)return login();
+ const title=document.getElementById("etitle").value.trim()||"Tanpa judul",
+       category=document.getElementById("ecat").value.trim()||"Lainnya",
+       tags=document.getElementById("etags").value.split(",").map(x=>x.trim()).filter(Boolean),
+       desc=document.getElementById("edesc").value.trim(),
+       content=markdown(document.getElementById("ebody").value),
+       spaceId=document.getElementById("espace").value||null,
+       parentId=document.getElementById("eparent").value||null;
+
+ try{
+  if(editingId){
+   const ref=doc(db,"articles",editingId),snap=await getDoc(ref);
+   if(!snap.exists()||!canEditArticle({...snap.data(),id:editingId}))return toast("Tidak punya izin mengedit.");
+   const newVersionon=(snap.data().version||1)+1;
+   const patch={title,category,tags,desc,content,version:newVersionon,updatedAt:serverTimestamp()};
+   if(spaceId)patch.spaceId=spaceId;else patch.spaceId=deleteField();
+   if(parentId)patch.parentId=parentId;else patch.parentId=deleteField();
+
+   await updateDoc(ref,patch);
+   await addDoc(collection(db,"articles",editingId,"revisions"),{
+     version:newVersionon,title,category,tags,desc,content,editedBy:user.uid,editedByName:user.displayName||"Contributor",editedAt:serverTimestamp()
+   });
+   toast("Artikel berhasil diperbarui");
+  }else{
+   const base={
+     title,category,tags,desc,content,authorId:user.uid,authorName:user.displayName||"Contributor",authorPhoto:user.photoURL||"",
+     ownerId:user.uid,views:0,version:1,createdAt:serverTimestamp(),updatedAt:serverTimestamp()
+   };
+   if(spaceId)base.spaceId=spaceId;
+   if(parentId)base.parentId=parentId;
+
+   const ref=await addDoc(collection(db,"articles"),base);
+   await addDoc(collection(db,"articles",ref.id,"revisions"),{
+     version:1,title,category,tags,desc,content,editedBy:user.uid,editedByName:user.displayName||"Contributor",editedAt:serverTimestamp()
+   });
+   toast("Artikel diterbitkan");
+   editingId=ref.id;
+  }
+  setTimeout(()=>window.openArticle(editingId),400);
+ }catch(e){console.error(e);toast("Gagal menyimpan: "+(e.code||e.message))}
+}
+window.saveArticle=saveArticle;
+
+function removeArticle(id){
+ if(!user)return;
+ showModal({
+   title:"Delete Artikel",
+   message:"Apakah Anda yakin ingin menghapus artikel ini? Tindakan ini tidak dapat dibatalkan.",
+   confirmText:"Ya, Delete",
+   onConfirm:async ()=>{
+     try{
+      const ref=doc(db,"articles",id),snap=await getDoc(ref);
+      if(!snap.exists()||!canDeleteArticle({...snap.data(),id}))return toast("Tidak punya izin menghapus.");
+      await deleteDoc(ref);toast("Artikel dihapus");home();
+     }catch(e){toast("Gagal menghapus: "+(e.code||e.message))}
+   }
+ });
+}
+window.removeArticle=removeArticle;
+function editArticle(id){renderEditor(id)} window.editArticle=editArticle;
+
+function searchArticles(){
+ const q=document.getElementById("search").value.trim().toLowerCase();if(!q)return home();
+ rerenderCurrent=searchArticles;
+ if(location.hash)history.pushState(null,'',location.pathname+location.search);
+ const all=[...articles,...demo],f=all.filter(a=>(a.title+" "+a.desc+" "+(a.tags||[]).join(" ")+" "+a.category).toLowerCase().includes(q));
+ document.getElementById("main").innerHTML=`<div class="crumb-container"><span class="crumb-item" onclick="window.home()">← Home</span></div><h1>Search results</h1><p class="muted">${f.length} hasil untuk “${esc(q)}”</p><section class="section"><div class="cards">${f.length?f.map(card).join(""):`<div class="empty">Tidak menemukan artikel yang cocok.</div>`}</div></section>`;
+}
+window.searchArticles=searchArticles;
+
+function saved(){
+ rerenderCurrent=saved;
+ if(location.hash)history.pushState(null,'',location.pathname+location.search);
+ document.getElementById("main").innerHTML=`<h1>Saved</h1><div class="empty">Daftar bookmark artikel tersimpan Anda akan tampil di sini.</div>`;setNav("saved")}
+
+function profile(){
+ if(!user){login();return}
+ rerenderCurrent=profile;
+ if(location.hash)history.pushState(null,'',location.pathname+location.search);
+ const mine=articles.filter(a=>a.ownerId===user.uid);
+ document.getElementById("main").innerHTML=`<h1>Profil Saya</h1><section class="section profile"><div class="box"><img class="avatar" src="${esc(user.photoURL||"")}"><h2>${esc(user.displayName||"Pengguna")}</h2><p class="muted">${esc(user.email||"")}</p><small class="muted">UID: ${esc(user.uid)}</small></div><div class="box"><h2>Artikel Saya</h2>${mine.length?mine.map(a=>`<div class="listrow" onclick='window.openArticle(${JSON.stringify(a.id)})'><h3>${esc(a.title)}</h3><p>${esc(a.desc||"")}</p></div>`).join(""):`<div class="empty">Belum ada artikel online yang Anda buat.</div>`}</div></section>`;
+}
+function about(){toast(user?`Backend Firestore Aktif · Logged in: ${user.email}`:"Backend Siap · Belum Login")}
+
+/* Spaces Management & Collaborative Hierarchy View */
+function spaceCard(s){
+ const role=spaceRole(s), count=[...articles,...demo].filter(a=>a.spaceId===s.id).length;
+ return `<article class="card" onclick='window.openSpaces(${JSON.stringify(s.id)})'><div class="icon">🌎</div><h3>${esc(s.name)}</h3><p>${esc(s.desc||"Belum ada deskripsi.")}</p><div class="meta">${count} artikel${role?` · ${roleLabel(role)}`:""}</div></article>`;
+}
+
+function spacesPage(){
+ rerenderCurrent=spacesPage;
+ if(location.hash)history.pushState(null,'',location.pathname+location.search);
+ setNav("spaces");
+ const allSpacess=[...spaces,...demoSpacess];
+ document.getElementById("main").innerHTML=`<div class="sectionhead"><h1>Spaces / Universe</h1>${user?`<button class="btn primary" onclick="window.renderSpacesEditor()">＋ Create Spaces</button>`:""}</div><p class="muted">Spaces = wadah untuk sekumpulan artikel yang saling berhubungan secara hierarkis (worldbuilding, riset, proyek robotik, sejarah desa, dll).</p><section class="section"><div class="cards">${allSpacess.length?allSpacess.map(spaceCard).join(""):`<div class="empty">Belum ada Spaces.</div>`}</div></section>`;
+}
+window.spacesPage=spacesPage;
+
+function renderSpacesEditor(id=null){
+ if(!user)return login();
+ const s=findSpaces(id);
+ if(id && !s)return toast("Spaces tidak ditemukan");
+ if(s && !canManageSpaces(s))return toast("Hanya Owner yang dapat mengedit Spaces ini.");
+ editingSpacesId=id;
+ document.getElementById("main").innerHTML=`<div class="editor"><div class="crumb-container"><span class="crumb-item" onclick="window.spacesPage()">← Back</span></div><h1>${s?"Edit Space":"Create a Space"}</h1><input id="sname" class="title" style="font-size:28px" placeholder="Space name (mis. Sejarah Sendok Dapur, Asteria Universe)" value="${esc(s?.name||"")}"><input id="sdesc" class="field" placeholder="Short description" value="${esc(s?.desc||"")}"><div class="editorbar"><span class="muted">☁ Cloud</span><div><button class="btn" onclick="window.spacesPage()">Cancel</button> <button class="btn primary" onclick="window.saveSpaces()">Save Space</button></div></div></div>`;
+}
+window.renderSpacesEditor=renderSpacesEditor;
+
+async function saveSpaces(){
+ const name=document.getElementById("sname").value.trim()||"Spaces Tanpa Nama",desc=document.getElementById("sdesc").value.trim();
+ try{
+  if(editingSpacesId){
+   const ref=doc(db,"spaces",editingSpacesId),snap=await getDoc(ref);
+   if(!snap.exists()||snap.data().ownerId!==user.uid)return toast("Tidak punya izin mengedit Spaces ini.");
+   await updateDoc(ref,{name,desc,updatedAt:serverTimestamp()});
+   toast("Spaces diperbarui");
+   setTimeout(()=>window.openSpaces(editingSpacesId),400);
+  }else{
+   const ref=await addDoc(collection(db,"spaces"),{name,desc,ownerId:user.uid,ownerName:user.displayName||"Pengguna",members:{},createdAt:serverTimestamp(),updatedAt:serverTimestamp()});
+   toast("Spaces berhasil dibuat");
+   setTimeout(()=>window.openSpaces(ref.id),400);
+  }
+ }catch(e){console.error(e);toast("Gagal menyimpan Spaces: "+(e.code||e.message))}
+}
+window.saveSpaces=saveSpaces;
+
+function openSpaces(id){
+ const s=findSpaces(id);if(!s)return toast("Spaces tidak ditemukan.");
+ rerenderCurrent=()=>openSpaces(id);
+ history.pushState(null,'',location.pathname+location.search);
+ setNav("spaces");
+ const role=spaceRole(s);
+ const all=[...articles,...demo];
+ const spaceArticles=all.filter(a=>a.spaceId===id);
+ const memberEntries=Object.entries(s.members||{});
+
+ const treeHTML=renderTreeHTML(null, id, null);
+
+ document.getElementById("main").innerHTML=`
+ <div class="crumb-container"><span class="crumb-item" onclick="window.spacesPage()">← Semua Spaces</span></div>
+ <div class="sectionhead">
+   <div>
+     <h1>🌎 ${esc(s.name)} ${role?`<span class="badge ${role}">${roleLabel(role)}</span>`:""}</h1>
+     <p class="muted">${esc(s.desc||"")}</p>
+   </div>
+   <div>
+     ${canCreateInSpaces(s)?`<button class="btn primary" onclick='window.requireLoginInSpaces(${JSON.stringify(id)})'>＋ New root page</button>`:""} 
+     ${canManageSpaces(s)?`<button class="btn" onclick='window.renderSpacesEditor(${JSON.stringify(id)})'>✎ Edit</button> <button class="btn danger" onclick='window.removeSpaces(${JSON.stringify(id)})'>Delete Spaces</button>`:""}
+   </div>
+ </div>
+
+ <div class="articlegrid" style="margin-top:24px">
+   <div>
+     <h2>Pohon Artikel (Tree View)</h2>
+     <div class="tree-card" style="padding:24px">
+       ${treeHTML||'<p class="muted">Belum ada artikel di Spaces ini. Klik "+ New root page" untuk memulai.</p>'}
+     </div>
+
+     <h2 style="margin-top:30px">Daftar Semua Artikel</h2>
+     <div class="cards" style="grid-template-columns:1fr 1fr;margin-top:14px">
+       ${spaceArticles.length?spaceArticles.map(card).join(""):`<div class="empty" style="grid-column:1/-1">Belum ada artikel.</div>`}
+     </div>
+   </div>
+
+   <aside>
+     ${canManageSpaces(s)?`
+       <div class="box" style="padding:20px">
+         <h3 style="margin-top:0">👥 Anggota & Hak Akses</h3>
+         <div class="memberrow">
+           <span class="who">${esc(s.ownerName||"Owner")}</span>
+           <span class="badge owner">Owner</span>
+         </div>
+         ${memberEntries.length?memberEntries.map(([uid,r])=>`
+           <div class="memberrow">
+             <span class="who">${esc(uid)}</span>
+             <select onchange='window.changeMemberRole(${JSON.stringify(id)},${JSON.stringify(uid)},this.value)'>
+               <option value="viewer" ${r==="viewer"?"selected":""}>Viewer</option>
+               <option value="contributor" ${r==="contributor"?"selected":""}>Contributor</option>
+               <option value="editor" ${r==="editor"?"selected":""}>Editor</option>
+             </select>
+             <button class="btn danger sm" onclick='window.removeMember(${JSON.stringify(id)},${JSON.stringify(uid)})'>✕</button>
+           </div>
+         `).join(""):`<p class="muted" style="font-size:13px">Belum ada kolaborator.</p>`}
+         <div class="invite">
+           <input id="inviteEmail" class="field" placeholder="Email kolaborator...">
+           <select id="inviteRole" class="field" style="max-width:130px">
+             <option value="viewer">Viewer</option>
+             <option value="contributor" selected>Contributor</option>
+             <option value="editor">Editor</option>
+           </select>
+         </div>
+         <button class="btn primary sm" style="margin-top:8px;width:100%" onclick='window.inviteMember(${JSON.stringify(id)})'>Undang Anggota</button>
+       </div>
+     `:`
+       <div class="box" style="padding:20px">
+         <h3>About this page Kolaborasi</h3>
+         <p class="muted" style="font-size:13px">Pemilik Spaces ini dapat mengundang Anda sebagai Editor atau Contributor untuk membuat dan mengedit sub-halaman.</p>
+       </div>
+     `}
+   </aside>
+ </div>`;
+}
+window.openSpaces=openSpaces;
+window.requireLoginInSpaces=(spaceId)=>{if(user)renderEditor(null,spaceId,null);else login()};
+
+async function inviteMember(spaceId){
+ const email=document.getElementById("inviteEmail").value.trim().toLowerCase(),role=document.getElementById("inviteRole").value;
+ if(!email)return;
+ try{
+  const q=query(collection(db,"users"),where("email","==",email),limit(1));
+  const snap=await getDocs(q);
+  if(snap.empty)return toast("User dengan email tersebut belum pernah login ke Atlasia.");
+  const uid=snap.docs[0].id;
+  const s=findSpaces(spaceId);
+  if(uid===s.ownerId)return toast("User tersebut adalah Owner Spaces ini.");
+  await updateDoc(doc(db,"spaces",spaceId),{["members."+uid]:role,updatedAt:serverTimestamp()});
+  toast("Kolaborator berhasil ditambahkan");
+ }catch(e){console.error(e);toast("Gagal mengundang: "+(e.code||e.message))}
+}
+window.inviteMember=inviteMember;
+
+async function changeMemberRole(spaceId,uid,role){
+ try{await updateDoc(doc(db,"spaces",spaceId),{["members."+uid]:role,updatedAt:serverTimestamp()});toast("Role berhasil diperbarui")}
+ catch(e){toast("Gagal mengubah role: "+(e.code||e.message))}
+}
+window.changeMemberRole=changeMemberRole;
+
+function removeMember(spaceId,uid){
+ showModal({
+   title:"Keluarkan Kolaborator",
+   message:"Apakah Anda yakin ingin mengeluarkan kolaborator ini dari Spaces?",
+   confirmText:"Ya, Keluarkan",
+   onConfirm:async ()=>{
+     try{await updateDoc(doc(db,"spaces",spaceId),{["members."+uid]:deleteField(),updatedAt:serverTimestamp()});toast("Kolaborator dikeluarkan")}
+     catch(e){toast("Gagal: "+(e.code||e.message))}
+   }
+ });
+}
+window.removeMember=removeMember;
+
+function removeSpaces(id){
+ showModal({
+   title:"Delete Spaces",
+   message:"Artikel di dalamnya tidak akan terhapus, hanya dilepas dari wadah Spaces ini. Lanjutkan?",
+   confirmText:"Ya, Delete Spaces",
+   onConfirm:async ()=>{
+     try{
+      const mine=articles.filter(a=>a.spaceId===id);
+      for(const a of mine){await updateDoc(doc(db,"articles",a.id),{spaceId:deleteField()}).catch(()=>{})}
+      await deleteDoc(doc(db,"spaces",id));
+      toast("Spaces dihapus");
+      spacesPage();
+     }catch(e){toast("Gagal menghapus Spaces: "+(e.code||e.message))}
+   }
+ });
+}
+window.removeSpaces=removeSpaces;
+
+/* Revision History & Diff Comparison */
+let revCompareSelection=[];
+function diffWords(oldText,newText){
+ const a=oldText.split(/(\s+)/),b=newText.split(/(\s+)/);
+ const dp=Array.from({length:a.length+1},()=>new Array(b.length+1).fill(0));
+ for(let i=a.length-1;i>=0;i--)for(let j=b.length-1;j>=0;j--)dp[i][j]=a[i]===b[j]?dp[i+1][j+1]+1:Math.max(dp[i+1][j],dp[i][j+1]);
+ let i=0,j=0,out=[];
+ while(i<a.length&&j<b.length){
+  if(a[i]===b[j]){out.push(esc(a[i]));i++;j++}
+  else if(dp[i+1][j]>=dp[i][j+1]){out.push(`<span class="diffdel">${esc(a[i])}</span>`);i++}
+  else{out.push(`<span class="diffadd">${esc(b[j])}</span>`);j++}
+ }
+ while(i<a.length){out.push(`<span class="diffdel">${esc(a[i])}</span>`);i++}
+ while(j<b.length){out.push(`<span class="diffadd">${esc(b[j])}</span>`);j++}
+ return out.join("");
+}
+
+async function openRevisions(articleId){
+ const a=articles.find(x=>x.id===articleId);if(!a)return toast("Artikel tidak ditemukan");
+ rerenderCurrent=()=>openRevisions(articleId);
+ history.pushState(null,'',location.pathname+location.search);
+ revCompareSelection=[];
+ try{
+  const q=query(collection(db,"articles",articleId,"revisions"),orderBy("version","desc"),limit(50));
+  const snap=await getDocs(q);
+  const revs=snap.docs.map(d=>({id:d.id,...d.data()}));
+  renderRevisionList(articleId,revs);
+ }catch(e){console.error(e);toast("Gagal memuat riwayat versi: "+(e.code||e.message))}
+}
+window.openRevisions=openRevisions;
+
+function renderRevisionList(articleId,revs){
+ document.getElementById("main").innerHTML=`<div class="crumb-container"><span class="crumb-item" onclick='window.renderArticleUI(${JSON.stringify(articleId)})'>← Back ke Artikel</span></div><h1>🕐 Riwayat Version</h1><p class="muted">Klik dua versi untuk membandingkan perubahan (Diff), atau buka satu versi untuk melihat isi / memulihkan.</p><div class="box" style="padding:8px 20px" id="revlist">${revs.map(r=>`<div class="revrow" data-rid="${esc(r.id)}"><span class="v">Version ${r.version}</span><span class="muted" style="flex:1">${esc(r.editedByName||"")} · ${r.editedAt?.toDate?.()?.toLocaleString("id-ID")||"baru saja"}</span><button class="btn sm" onclick='event.stopPropagation();window.viewRevision(${JSON.stringify(articleId)},${JSON.stringify(r.id)})'>Lihat Version</button></div>`).join("")}</div><div id="revaction" style="margin-top:16px"></div>`;
+ document.querySelectorAll("#revlist .revrow").forEach(row=>{
+  row.addEventListener("click",()=>{
+   const rid=row.dataset.rid;
+   const idx=revCompareSelection.indexOf(rid);
+   if(idx>-1){revCompareSelection.splice(idx,1);row.classList.remove("selected")}
+   else{if(revCompareSelection.length>=2){const first=revCompareSelection.shift();document.querySelector(`#revlist .revrow[data-rid="${first}"]`)?.classList.remove("selected")}revCompareSelection.push(rid);row.classList.add("selected")}
+   const box=document.getElementById("revaction");
+   if(revCompareSelection.length===2)box.innerHTML=`<button class="btn primary" onclick='window.compareRevisions(${JSON.stringify(articleId)},${JSON.stringify(revCompareSelection[0])},${JSON.stringify(revCompareSelection[1])})'>Bandingkan 2 Version Terpilih</button>`;
+   else box.innerHTML="";
+  });
+ });
+}
+
+async function viewRevision(articleId,revId){
+ try{
+  const snap=await getDoc(doc(db,"articles",articleId,"revisions",revId));
+  if(!snap.exists())return toast("Version tidak ditemukan");
+  const r=snap.data();
+  const a=articles.find(x=>x.id===articleId);
+  const isLatest=a && r.version===a.version;
+  document.getElementById("main").innerHTML=`<div class="crumb-container"><span class="crumb-item" onclick='window.openRevisions(${JSON.stringify(articleId)})'>← Riwayat Version</span></div><h1>${esc(r.title)} <span class="badge">Version ${r.version}</span></h1><p class="muted">Diedit oleh ${esc(r.editedByName||"")} pada ${r.editedAt?.toDate?.()?.toLocaleString("id-ID")||""}</p>${!isLatest && a && canEditArticle(a)?`<button class="btn primary" style="margin-bottom:16px" onclick='window.restoreRevision(${JSON.stringify(articleId)},${JSON.stringify(revId)})'>⟲ Pulihkan ke Version Ini</button>`:""}<div class="diffwrap">${r.content||"<p>Kosong.</p>"}</div>`;
+ }catch(e){toast("Gagal memuat versi: "+(e.code||e.message))}
+}
+window.viewRevision=viewRevision;
+
+async function compareRevisions(articleId,ridA,ridB){
+ try{
+  const [snapA,snapB]=await Promise.all([getDoc(doc(db,"articles",articleId,"revisions",ridA)),getDoc(doc(db,"articles",articleId,"revisions",ridB))]);
+  if(!snapA.exists()||!snapB.exists())return toast("Version tidak ditemukan");
+  let ra=snapA.data(),rb=snapB.data();
+  if(ra.version>rb.version)[ra,rb]=[rb,ra];
+  const oldPlain=plain(ra.content||""),newPlain=plain(rb.content||"");
+  document.getElementById("main").innerHTML=`<div class="crumb-container"><span class="crumb-item" onclick='window.openRevisions(${JSON.stringify(articleId)})'>← Back ke Riwayat Version</span></div><h1>Perbandingan Version ${ra.version} → Version ${rb.version}</h1><p class="muted"><span class="diffdel">Teks Merah</span> = Dihapus, <span class="diffadd">Teks Hijau</span> = Ditambahkan.</p><div class="diffwrap">${diffWords(oldPlain,newPlain).replace(/\n/g,"<br>")}</div>`;
+ }catch(e){toast("Gagal membandingkan: "+(e.code||e.message))}
+}
+window.compareRevisions=compareRevisions;
+
+function restoreRevision(articleId,revId){
+ showModal({
+   title:"Pulihkan Version Artikel",
+   message:"Artikel akan dipulihkan ke versi lama ini. Sebuah versi baru akan dibuat berisi konten lama tersebut. Lanjutkan?",
+   confirmText:"Ya, Pulihkan",
+   onConfirm:async ()=>{
+     try{
+      const aRef=doc(db,"articles",articleId),aSnap=await getDoc(aRef);
+      if(!aSnap.exists()||!canEditArticle({...aSnap.data(),id:articleId}))return toast("Tidak punya izin memulihkan artikel ini.");
+      const rSnap=await getDoc(doc(db,"articles",articleId,"revisions",revId));
+      if(!rSnap.exists())return toast("Version tidak ditemukan");
+      const r=rSnap.data(),newVersionon=(aSnap.data().version||1)+1;
+      await updateDoc(aRef,{title:r.title,category:r.category,tags:r.tags,desc:r.desc,content:r.content,version:newVersionon,updatedAt:serverTimestamp()});
+      await addDoc(collection(db,"articles",articleId,"revisions"),{version:newVersionon,title:r.title,category:r.category,tags:r.tags,desc:r.desc,content:r.content,editedBy:user.uid,editedByName:user.displayName||"Contributor",editedAt:serverTimestamp(),restoredFrom:r.version});
+      toast("Artikel berhasil dipulihkan ke versi "+r.version);
+      setTimeout(()=>window.renderArticleUI(articleId),400);
+     }catch(e){console.error(e);toast("Gagal memulihkan: "+(e.code||e.message))}
+   }
+ });
+}
+window.restoreRevision=restoreRevision;
+
+window.login=login;window.logout=logout;
+window.authDebug=async()=>{
+ const info={
+   origin:location.origin,
+   hostname:location.hostname,
+   authDomain:firebaseConfig.authDomain,
+   uid:user?.uid||null,
+   email:user?.email||null,
+   authReady,
+   persistence:"browserLocalPersistence"
+ };
+ console.table(info);
+ return info;
+};
+window.requireLogin=requireLogin;window.home=home;window.explore=explore;window.saved=saved;window.profile=profile;window.about=about;window.renderArticleUI=renderArticleUI;
+
+window.addEventListener("popstate",()=>{
+ const hid=parseHashArticleId();
+ if(hid && ([...articles,...demo].find(a=>a.id===hid)))renderArticleUI(hid);
+ else home();
+});
+
+// Render the shell immediately, then let Firebase replace the account state
+// once persistence / redirect authentication has finished.
+if(!parseHashArticleId())home();
+</script>
+</body>
+</html>
